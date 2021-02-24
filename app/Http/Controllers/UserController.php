@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Redis;
 use App\Models\User;
 
@@ -15,12 +14,22 @@ class UserController extends Controller
         $cachedUsers = Redis::get('users');
 
         if($cachedUsers > 0) {
-            return view('users')->with(['users' => $cachedUsers]);
+//            return view('users')->with(['users' => $cachedUsers]);
+//            return response()->json($cachedUsers);
+            return response()->json([
+                'status_code' => 201,
+                'message' => 'Fetched from redis',
+                'data' => $cachedUsers,
+            ]);
         }else {
             $users = User::all();
             Redis::set('users', $users);
 
-            return view('users')->with(['users' => $users]);
+            return response()->json([
+                'status_code' => 201,
+                'message' => 'Fetched from database',
+                'data' => $users,
+            ]);
         }
     }
 }
