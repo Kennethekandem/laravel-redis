@@ -37,8 +37,14 @@ class UserController extends Controller
 
         $update = User::findOrFail($id)->update($request->all());
 
-        $users = User::all();
-        Redis::set('users', $users);
+//        $users = User::all();
+//        Redis::set('users', $users);
+
+//        Redis::publish('test-channel', '');
+
+        Redis::publish('test-channel', json_encode([
+            'name' => 'Adam Wathan'
+        ]));
 
         return response()->json([
             'status_code' => 201,
