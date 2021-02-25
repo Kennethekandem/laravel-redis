@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Redis;
 use App\Models\User;
 
@@ -32,5 +31,32 @@ class UserController extends Controller
                 'data' => $users,
             ]);
         }
+    }
+
+    public function update(Request $request, $id) {
+
+        $update = User::findOrFail($id)->update($request->all());
+
+        $users = User::all();
+        Redis::set('users', $users);
+
+        return response()->json([
+            'status_code' => 201,
+            'message' => 'User updated',
+            'data' => $update,
+        ]);
+    }
+
+    public function delete($id) {
+        User::findOrFail($id)->delete();
+
+        $users = User::all();
+        Redis::set('users', $users);
+
+        return response()->json([
+            'status_code' => 201,
+            'message' => 'User deleted',
+            'data' => $users,
+        ]);
     }
 }

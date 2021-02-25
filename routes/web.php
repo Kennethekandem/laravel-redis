@@ -1,7 +1,6 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\UserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -19,3 +18,5 @@ Route::get('/', function () {
 });
 
 Route::get('/users', 'UserController@index');
+Route::post('/users/update/{id}', 'userController@update');
+Route::delete('/users/delete/{id}', 'userController@delete');
