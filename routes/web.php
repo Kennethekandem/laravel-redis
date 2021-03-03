@@ -22,3 +22,5 @@ Route::post('/users/update/{id}', 'userController@update');
 Route::delete('/users/delete/{id}', 'userController@delete');*/
 
 Route::get('/blogs/{id}', 'BlogController@index');
+Route::post('/blogs/update/{id}', 'BlogController@update');
+Route::delete('/blogs/delete/{id}', 'BlogController@delete');
